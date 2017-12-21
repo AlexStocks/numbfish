@@ -552,18 +552,18 @@ ERR_RET:
 /**
  * @brief 检查指定目录是否存在
  */
-bool check_dir_exist(const char* path)
+BOOL check_dir_exist(const char* path)
 {
     if (!path) {
-        return false;
+        return FALSE;
     }
 
     DIR* dir = opendir(path);
     if (!dir) {
-        return false;
+        return FALSE;
     } else {
         closedir(dir);
-        return true;
+        return TRUE;
     }
 }
 
@@ -576,20 +576,20 @@ mode_t getumask()
 /**
  * @brief 检查并创建目录
  */
-bool check_and_mkdir(const char *path)
+BOOL check_and_mkdir(const char *path)
 {
     if (!path) {
-        return false;
+        return FALSE;
     }
 
     if (!check_dir_exist(path)) {
         mode_t mask = getumask();
         if (mkdir(path, ~mask & 0777) < 0)  {
-            return false;
+            return FALSE;
         }
     }
 
-    return true;
+    return TRUE;
 }
 
 /**

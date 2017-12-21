@@ -187,7 +187,7 @@ void process_route_request(int32_t listen_fd)
     struct sockaddr_in addr;
     socklen_t addr_len = sizeof(addr);
 
-    while (true) {
+    while (TRUE) {
         /* 接收路由请求包 */
         len = recvfrom(listen_fd, buff, sizeof(buff), 0, (struct sockaddr *)&addr, &addr_len);
         if (len == -1) {

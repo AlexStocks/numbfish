@@ -83,7 +83,7 @@ struct agent_local_rdata *add_local_rdata(const char *name, struct shm_meta *met
     rdata->route_meta       = meta;
     rdata->servs_data[0]    = s0;
     rdata->servs_data[1]    = s1;
-    rdata->watcher_flag     = false;
+    rdata->watcher_flag     = FALSE;
     rdata->update_time      = get_time_ms();
 
     list_add(&rdata->hash_node, &agent_rdata_hash[hash]);
@@ -252,7 +252,7 @@ void calc_servers_weight(struct shm_servers *servers)
     }
 }
 
-void _shaping_servers(struct shm_servers *servers, double success_ratio_base, bool weight_dec)
+void _shaping_servers(struct shm_servers *servers, double success_ratio_base, BOOL weight_dec)
 {
     int32_t  begin, end;
     uint16_t weight;
@@ -378,7 +378,7 @@ void shaping_servers(struct shm_servers *servers)
 
     weight_low_real_ratio = ((float)servers->weight_low_num)/svr_num;
     if (weight_low_real_ratio <= servers->weight_low_ratio) {
-        _shaping_servers(servers, servers->success_ratio_base, true);
+        _shaping_servers(servers, servers->success_ratio_base, TRUE);
     } else {
         /* 计算平均成功率，用平均成功率计算权重 */
         req_total = servers->fail_total + servers->success_total;
@@ -389,7 +389,7 @@ void shaping_servers(struct shm_servers *servers)
         }
 
         success_rate = min(success_rate, (double)servers->success_ratio_base);
-        _shaping_servers(servers, success_rate, false);
+        _shaping_servers(servers, success_rate, FALSE);
     }
 
     servers->weight_low_num = calc_weight_low_num(servers);
@@ -582,19 +582,19 @@ void merge_servers_stat(struct shm_servers *dst_svrs, struct shm_servers *src_sv
 /**
  * @brief 检查服务器是否真死了
  */
-bool check_server_real_dead(struct server_info *server, float success_ratio)
+BOOL check_server_real_dead(struct server_info *server, float success_ratio)
 {
     uint32_t total = server->success + server->failed;
 
     if (total == 0) {
-        return true;
+        return TRUE;
     }
 
     if ((server->success*1.0)/total < success_ratio) {
-        return true;
+        return TRUE;
     }
 
-    return false;
+    return FALSE;
 }
 
 /**
@@ -613,7 +613,7 @@ void handle_node_events(struct shm_servers *shm_servers, struct list_head *event
     {
         /* 如果策略不需要处理节点心跳变化，直接删除事件 */
         if (!check_need_heartbeat(shm_servers->policy)) {
-            delete_event(event, false);
+            delete_event(event, FALSE);
             continue;
         }
 
@@ -621,7 +621,7 @@ void handle_node_events(struct shm_servers *shm_servers, struct list_head *event
         server  = get_server_info(ip, shm_servers);
         if (NULL == server) {
             NLOG_ERROR("unkown node events, no this server [%s]", inet_ntoa(*(struct in_addr *)&ip));
-            delete_event(event, false);
+            delete_event(event, FALSE);
             continue;
         }
 
@@ -639,12 +639,12 @@ void handle_node_events(struct shm_servers *shm_servers, struct list_head *event
                 server->dead_time = 0;
                 server->weight_dynamic = max((uint16_t)1, (uint16_t)(server->weight_static*shm_servers->resume_weight_ratio));
             } else { /* 可能有连续两次事件导致不一致，可以忽略 */
-                delete_event(event, false);
+                delete_event(event, FALSE);
                 continue;
             }
         } else {
             NLOG_ERROR("unkown events, [%d]", event->type);
-            //delete_event(event, false);
+            //delete_event(event, FALSE);
             continue;
         }
 
@@ -656,7 +656,7 @@ void handle_node_events(struct shm_servers *shm_servers, struct list_head *event
         server->failed  = 0;
         server->success = 0;
 
-        delete_event(event, false);
+        delete_event(event, FALSE);
     }
 }
 
@@ -825,7 +825,7 @@ static int32_t handle_get_service_nodes_event(struct agent_local_rdata *rdata)
                 NLOG_ERROR("get_service_nodes failed, ret [%d]", ret);
                 return -2;
             }
-            delete_event(event_first, false);
+            delete_event(event_first, FALSE);
             return 0;
         }
     }

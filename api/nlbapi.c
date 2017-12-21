@@ -134,20 +134,20 @@ struct api_routedata *get_route_data(const char *name)
 /**
  * @brief 检查死机机器是否可用
  */
-bool check_dead_useable(struct shm_servers *servers)
+BOOL check_dead_useable(struct shm_servers *servers)
 {
     uint32_t old_retry;
 
     old_retry = servers->dead_retry_times;
     while (old_retry) {
         if (compare_and_swap(&servers->dead_retry_times, old_retry, old_retry-1)) {
-            return true;
+            return TRUE;
         }
 
         old_retry = servers->dead_retry_times;
     }
 
-    return false;
+    return FALSE;
 }
 
 /* 随机获取一个服务器的端口 */
@@ -379,20 +379,20 @@ EXIT_LABEL:
  * @brief 检查业务名是否有效
  * @info  必须两级业务名，"Login.ptlogin"
  */
-bool check_service_name(const char *name)
+BOOL check_service_name(const char *name)
 {
     char *pos;
 
     if (NULL == name || name[0] == '\0') {
-        return false;
+        return FALSE;
     }
 
     pos = strchr(name, '.');
     if (NULL == pos || *(pos + 1) == '\0') {
-        return false;
+        return FALSE;
     }
 
-    return true;
+    return TRUE;
 }
 
 /**

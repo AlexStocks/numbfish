@@ -48,7 +48,7 @@ int32_t str2policy(const char *policy);
 const char *policy2str(int32_t policy);
 
 /* 检查是否要做心跳上报 */
-bool check_need_heartbeat(int32_t policy);
+BOOL check_need_heartbeat(int32_t policy);
 
 
 #endif

@@ -37,7 +37,7 @@
 static zhandle_t *zh;
 static clientid_t myid;
 static const char *client_id_file = NLB_NAME_BASE_PATH"/.zk_client_id";
-static int32_t restart_flag = false;
+static int32_t restart_flag = FALSE;
 static time_t  last_restart_time;
 //static FILE *log_fp;
 
@@ -80,28 +80,28 @@ const char* zk_stat_2_str(int32_t state)
 }
 
 /* 检查zookeeper是否已经连接上 */
-bool zk_connected(void)
+BOOL zk_connected(void)
 {
     return zoo_state(zh) == ZOO_CONNECTED_STATE;
 }
 
 /* 检查是否需要重新初始化zookeeper */
-bool zk_need_reinit(void)
+BOOL zk_need_reinit(void)
 {
     if (last_restart_time == time(NULL)) {
-        return false;
+        return FALSE;
     }
 
     if (is_unrecoverable(zh)) {
-        return true;
+        return TRUE;
     }
 
     if (restart_flag) {
-        restart_flag = false;
-        return true;
+        restart_flag = FALSE;
+        return TRUE;
     }
 
-    return false;
+    return FALSE;
 }
 
 /* zookeeper写clientid到id文件 */
@@ -198,11 +198,11 @@ static void zk_watch_global(zhandle_t *zzh, int type, int state, const char *pat
                 return;
             }
         } else if (state == ZOO_AUTH_FAILED_STATE) {
-            restart_flag = true;
+            restart_flag = TRUE;
             NLOG_ERROR("Zookeeper authentication failure. Restart...");
             return;
         } else if (state == ZOO_EXPIRED_SESSION_STATE) {
-            restart_flag = true;
+            restart_flag = TRUE;
             NLOG_ERROR("Zookeeper session expired. Restart...");
             return;
         }
@@ -295,7 +295,7 @@ void nlb_zk_process(uint32_t nlb_events)
         || ret == ZSESSIONEXPIRED
         || ret == ZINVALIDSTATE
         || ret == ZAUTHFAILED) {
-        restart_flag = true;
+        restart_flag = TRUE;
     }
 }
 

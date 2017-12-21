@@ -42,28 +42,28 @@ uint32_t gen_hash_key(const char *str)
 /**
  * @brief 判断是否质数
  */ 
-bool prime(uint32_t n)
+BOOL prime(uint32_t n)
 {
     int32_t i;
 
     if (n == 0 || n == 1) {
-        return false;
+        return FALSE;
     }
 
     if (n == 2) {
-        return true;
+        return TRUE;
     }
 
     if (n % 2 == 0) {
-        return false;
+        return FALSE;
     }
 
     for (i = 3; i * i <= n; i += 2) {
         if (n % i == 0) {
-            return false;
+            return FALSE;
         }
     }
-    return true;
+    return TRUE;
 }
 
 /**

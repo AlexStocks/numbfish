@@ -53,6 +53,6 @@ void add_node_event(uint32_t ip, int32_t type);
 /**
  * @brief 删除一个事件
  */
-void delete_event(struct event *event, bool free_ctx);
+void delete_event(struct event *event, BOOL free_ctx);
 
 #endif

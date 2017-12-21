@@ -20,7 +20,7 @@
 
 CC=gcc
 # CFLAGS= -std=gnu99 -pipe -fno-ident -z defs -g -ggdb -Wall -D_GNU_SOURCE -Wno-write-strings -Werror
-CFLAGS= -std=gnu99 -pipe -fno-ident -g -ggdb3 -O0 -Wall -D_GNU_SOURCE -Wno-write-strings -Werror
+CFLAGS= -std=gnu11 -pipe -fno-ident -g -ggdb3 -O0 -Wall -D_GNU_SOURCE -Wno-write-strings -Werror
 ifeq ($(ARCH),32)
 	CFLAGS +=  -march=pentium4 -m32 -pthread
 else

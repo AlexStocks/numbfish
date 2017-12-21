@@ -47,7 +47,7 @@ struct event *create_event(int32_t type, const char *name, void *ctx)
 /**
  * @brief 直接添加事件到链表
  */
-void add_event(struct list_head *event_list, int32_t type, const char *name, void *ctx, bool tail)
+void add_event(struct list_head *event_list, int32_t type, const char *name, void *ctx, BOOL tail)
 {
     struct event *event;
 
@@ -78,7 +78,7 @@ void merge_new_event(struct list_head *event_list, int32_t type, const char *nam
 
     /* 如果当前没有事件，直接添加事件 */
     if (list_empty(event_list)) {
-        add_event(event_list, type, name, ctx, false);
+        add_event(event_list, type, name, ctx, FALSE);
         return;
     }
 
@@ -89,7 +89,7 @@ void merge_new_event(struct list_head *event_list, int32_t type, const char *nam
             return;
         }
 
-        add_event(event_list, type, name, ctx, false);
+        add_event(event_list, type, name, ctx, FALSE);
         return;
     }
 
@@ -103,7 +103,7 @@ void merge_new_event(struct list_head *event_list, int32_t type, const char *nam
         }
     }
 
-    add_event(event_list, type, name, ctx, true);
+    add_event(event_list, type, name, ctx, TRUE);
     return;
 }
 
@@ -155,7 +155,7 @@ void add_node_event(uint32_t ip, int32_t type)
 /**
  * @brief 删除一个事件
  */
-void delete_event(struct event *event, bool free_ctx)
+void delete_event(struct event *event, BOOL free_ctx)
 {
     list_del(&event->list_node);
     if (free_ctx && (event->ctx != NULL)) {

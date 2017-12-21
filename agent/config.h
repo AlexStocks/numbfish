@@ -31,7 +31,7 @@ enum {
 };
 
 struct config {
-    bool     quit;           /* 退出程序标记 */
+    BOOL     quit;           /* 退出程序标记 */
     uint16_t port;           /* CLIENT_MODE监听端口 */
     uint32_t local_ip;       /* 本机IP地址 */
     int32_t  mode;           /* agent工作模式 */
@@ -80,11 +80,11 @@ static inline int32_t get_log_level(void) {
 
 /* 设置退出标记 */
 static inline void set_quit(void) {
-    g_agent_config.quit = true;
+    g_agent_config.quit = TRUE;
 }
 
 /* 检查是否退出程序 */
-static inline bool quit(void) {
+static inline BOOL quit(void) {
     return g_agent_config.quit;
 }
 

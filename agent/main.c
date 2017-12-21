@@ -40,7 +40,7 @@ static void sig_quit(int sig)
 }
 
 /* agent进程单例检查 */
-static bool singleton_check(void)
+static BOOL singleton_check(void)
 {
     int32_t ret;
     int32_t fd;
@@ -49,24 +49,24 @@ static bool singleton_check(void)
     ret = mkdir_recursive(NLB_NAME_BASE_PATH);
     if (ret < 0) {
         printf("[ERROR] Make nlb agent data directory (%s) failed [%m]!!!\n", NLB_NAME_BASE_PATH);
-        return false;
+        return FALSE;
     }
 
     fd = open(sing_file_lock, O_RDWR | O_CREAT, 0666);
     if (fd < 0) {
         printf("[ERROR] Open file (%s) failed [%m]!!!\n", sing_file_lock);
-        return false;
+        return FALSE;
     }
 
     ret = flock(fd, LOCK_EX | LOCK_NB);
     if (ret < 0) {
         close(fd);
-        return false;
+        return FALSE;
     }
 
     /* 不关闭文件描述符 */
 
-    return true;
+    return TRUE;
 }
 
 static void daemon_init()
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 
     printf("Agent start success!!\n");
 
-    while (true) {
+    while (TRUE) {
         run();
     }
 

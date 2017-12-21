@@ -24,7 +24,7 @@
 #include "agent.h"
 
 /* 检查是否创建心跳节点 */
-bool check_heartbeat_created(void);
+BOOL check_heartbeat_created(void);
 
 /* 初始化节点监视数据 */
 void heartbeat_data_init(void);

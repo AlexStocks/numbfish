@@ -34,10 +34,10 @@ const char* zk_stat_2_str(int32_t state);
 zhandle_t *get_zk_instance(void);
 
 /* 检查zookeeper是否已经连接上 */
-bool zk_connected(void);
+BOOL zk_connected(void);
 
 /* 检查是否需要重新初始化zookeeper */
-bool zk_need_reinit(void);
+BOOL zk_need_reinit(void);
 
 /**
  * @brief  zookeeper创建节点函数

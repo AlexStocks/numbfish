@@ -64,7 +64,7 @@ static void clean_service_watching(const char *name)
 
     rdata = get_local_rdata(name);
     if (rdata) {
-        rdata->watcher_flag = false;
+        rdata->watcher_flag = FALSE;
     }
 }
 
@@ -77,14 +77,14 @@ static void set_service_watching(const char *name)
 
     rdata = get_local_rdata(name);
     if (rdata) {
-        rdata->watcher_flag = true;
+        rdata->watcher_flag = TRUE;
     }
 }
 
 /**
  * @brief 设置service监视标记
  */
-static bool is_service_watching(const char *name)
+static BOOL is_service_watching(const char *name)
 {
     struct agent_local_rdata *rdata;
 
@@ -93,7 +93,7 @@ static bool is_service_watching(const char *name)
         return rdata->watcher_flag;
     }
 
-    return false;
+    return FALSE;
 }
 
 

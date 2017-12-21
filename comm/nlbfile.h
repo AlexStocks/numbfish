@@ -135,7 +135,7 @@ int32_t mkdir_recursive(const char *absolute_path);
 /**
  * @brief 检查指定目录是否存在
  */
-bool check_dir_exist(const char* path);
+BOOL check_dir_exist(const char* path);
 
 
 

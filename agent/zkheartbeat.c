@@ -36,7 +36,7 @@
 
 #define NLB_NODE_WATCHER_MAX        1000000              /* 多阶hash节点数，100万 */
 
-static bool heartbeat_created = false;
+static BOOL heartbeat_created = FALSE;
 static uint32_t node_watcher_mod_cnt = MAX_ROW_COUNT;    /* 多阶hash阶数 */
 static uint32_t node_watcher_mods[MAX_ROW_COUNT];        /* 多阶hash模数 */
 static uint32_t node_watcher_mhash[NLB_NODE_WATCHER_MAX];/* 多阶hash数组 */
@@ -59,7 +59,7 @@ static int32_t make_zk_heartbeat_path(uint32_t ip, char *buff, int32_t len)
 /**
  * @brief 检查一个节点是否在监视中
  */
-static bool is_node_watching(uint32_t ip)
+static BOOL is_node_watching(uint32_t ip)
 {
     uint32_t i;
     uint32_t hash, idx, base = 0;
@@ -68,12 +68,12 @@ static bool is_node_watching(uint32_t ip)
         hash = ip%node_watcher_mods[i];
         idx  = hash + base;
         if (node_watcher_mhash[idx] == ip) {
-            return true;
+            return TRUE;
         }
         base += node_watcher_mods[i];
     }
 
-    return false;
+    return FALSE;
 }
 
 /**
@@ -120,7 +120,7 @@ static void set_node_watching(uint32_t ip)
 }
 
 /* 检查是否创建心跳节点 */
-bool check_heartbeat_created(void)
+BOOL check_heartbeat_created(void)
 {
     return heartbeat_created;
 }
@@ -128,7 +128,7 @@ bool check_heartbeat_created(void)
 /* 设置心跳节点已经创建 */
 void set_heartbeat_created(void)
 {
-    heartbeat_created = true;
+    heartbeat_created = TRUE;
 }
 
 /* 初始化节点监视数据 */

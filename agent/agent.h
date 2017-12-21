@@ -34,7 +34,7 @@ struct agent_local_rdata
 
     char name[NLB_SERVICE_NAME_LEN];    /* 业务名       */
     uint64_t update_time;               /* 更新时间戳   */
-    bool     watcher_flag;              /* 是否设置监视 */
+    BOOL     watcher_flag;              /* 是否设置监视 */
     struct shm_meta * route_meta;       /* 元数据信息   */
     struct shm_servers * servs_data[2]; /* 服务器信息   */
 };

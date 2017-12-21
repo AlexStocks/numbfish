@@ -35,10 +35,10 @@
 #include "sysinfo.h"
 #include "nlbtime.h"
 
-static bool loadreport_created = false;
+static BOOL loadreport_created = FALSE;
 
 /* 检查是否创建心跳节点 */
-bool check_loadreport_created(void)
+BOOL check_loadreport_created(void)
 {
     return loadreport_created;
 }
@@ -46,7 +46,7 @@ bool check_loadreport_created(void)
 /* 设置心跳节点已经创建 */
 void set_loadreport_created(void)
 {
-    loadreport_created = true;
+    loadreport_created = TRUE;
 }
 
 /**
@@ -141,12 +141,11 @@ static void loadreport_set_completion(int32_t rc, const struct Stat *stat, const
  */
 void load_report(uint32_t ip)
 {
-    int32_t  ret, data_len;
-    uint32_t cpu_percent;
-    uint64_t mem_total;
-    uint64_t mem_free;
+    int32_t  ret;
+    int32_t  data_len;
     char     buff[1024];
     char     path[NLB_PATH_MAX_LEN];
+    sys_load_info_t load;
 
     if (!zk_connected()) {
         NLOG_DEBUG("zookeeper is not connected");
@@ -156,16 +155,16 @@ void load_report(uint32_t ip)
     make_zk_loadreport_path(ip, path, sizeof(path));
 
     /* 获取系统信息 */
-    get_sysinfo(&cpu_percent, &mem_total, &mem_free);
+    get_sysinfo(ip, &load);
 
     /* 组装json字符串 */
-    data_len = snprintf(buff, sizeof(buff), "{\"timestamp\": %lu, \"cpu\": %u, \"mem_total\": %lu, \"mem_free\": %lu}",
-                        get_time_ms(), cpu_percent, mem_total, mem_free);
+    data_len = snprintf(buff, sizeof(buff), "{\"timestamp\": %lu, \"cpu\": %u, \"mem_total\": %lu, \"mem_free\": %lu,"
+                        "\"net_total\": %lu, \"net_snd_ratio\": %lu, \"net_rcv_ratio\": %lu}",
+                        get_time_ms(), load.cpu_percent, load.mem_total, load.mem_free,
+                        load.net_total, load.net_snd_ratio, load.net_rcv_ratio);
 
     ret = zoo_aset(get_zk_instance(), path, buff, data_len, -1, loadreport_set_completion, (void *)(long)ip);
     if (ret != ZOK) {
         NLOG_ERROR("set load report data failed, [%s]", zerror(ret));
     }
 }
-
-

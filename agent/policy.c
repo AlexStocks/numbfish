@@ -64,7 +64,7 @@ const char *policy2str(int32_t policy)
 }
 
 /* 检查是否要做心跳上报 */
-bool check_need_heartbeat(int32_t policy)
+BOOL check_need_heartbeat(int32_t policy)
 {
     switch (policy)
     {
@@ -72,15 +72,15 @@ bool check_need_heartbeat(int32_t policy)
         case NLB_POLICY_DYNAMIC_WRR:
         case NLB_POLICY_ODD:
         case NLB_POLICY_CONSIST_HASH:
-            return false;
+            return FALSE;
         case NLB_POLICY_DEFAULT:
         case NLB_POLICY_STANDARD:
-            return true;
+            return TRUE;
         default:
-            return false;
+            return FALSE;
     }
 
-    return false;
+    return FALSE;
 }
 
 
