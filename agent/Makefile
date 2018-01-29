@@ -29,7 +29,7 @@ endif
 
 #INC= -I./ -I../comm -I../api -I../third_party/zookeeper/include/include -I../third_party/zookeeper/include/generated -I../third_party/cJSON-master
 INC= -I./ -I../comm -I../api -I../third_party/zookeeper/include/zookeeper -I../third_party/jansson/include
-TARGET= nlbagent
+TARGET= numbfish
 OBJ= sysinfo.o zkheartbeat.o zkloadreport.o zkplugin.o zkservice.o config.o routeprocess.o networking.o jsonparser.o event.o agent.o policy.o log.o main.o
 LIB= -L../comm -lcomm ../third_party/zookeeper/lib/libzookeeper_st.a ../third_party/jansson/lib/libjansson.a -lm
 
